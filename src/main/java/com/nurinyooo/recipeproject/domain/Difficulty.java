@@ -1,5 +1,6 @@
 package com.nurinyooo.recipeproject.domain;
 
-public enum  Difficulty {
-    EASY,MODARATE,KIND_OF_HARD,HARD
+public enum Difficulty {
+
+    EASY, MODERATE, KIND_OF_HARD, HARD
 }

@@ -1,16 +1,23 @@
 package com.nurinyooo.recipeproject.controller;
 
+import com.nurinyooo.recipeproject.services.RecipeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
 
+    private final RecipeService recipeService;
+
+    public IndexController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
+
     @RequestMapping({"","/","index"})
-    public String getIndexPage(){
+    public String getIndexPage(Model model){
 
-        System.out.println("Some message to say ... 12311122245");
-
+        model.addAttribute("recipes",recipeService.getRecipe());
         return "index";
     }
 
