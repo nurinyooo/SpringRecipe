@@ -4,14 +4,15 @@ import com.nurinyooo.recipeproject.domain.*;
 import com.nurinyooo.recipeproject.repositories.CategoryRepository;
 import com.nurinyooo.recipeproject.repositories.RecipeRepository;
 import com.nurinyooo.recipeproject.repositories.UnitOfMeasureRepository;
+import org.slf4j.Logger;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.math.BigDecimal;
 
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
