@@ -40,6 +40,7 @@ public class Recipe {
     private Set<Category> categories = new HashSet<>();
 
     public Recipe() {
+
     }
 
     public void setNotes(Notes notes) {

@@ -36,7 +36,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         List<Recipe> recipes = new ArrayList<>(2);
 
-        //get UOMs
         Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
 
         if(!eachUomOptional.isPresent()){
@@ -73,7 +72,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
             throw new RuntimeException("Expected UOM Not Found");
         }
 
-        //get optionals
         UnitOfMeasure eachUom = eachUomOptional.get();
         UnitOfMeasure tableSpoonUom = tableSpoonUomOptional.get();
         UnitOfMeasure teapoonUom = tableSpoonUomOptional.get();
@@ -81,7 +79,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         UnitOfMeasure pintUom = pintUomOptional.get();
         UnitOfMeasure cupsUom = cupsUomOptional.get();
 
-        //get Categories
         Optional<Category> americanCategoryOptional = categoryRepository.findByDescription("American");
 
         if(!americanCategoryOptional.isPresent()){
@@ -97,7 +94,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         Category americanCategory = americanCategoryOptional.get();
         Category mexicanCategory = mexicanCategoryOptional.get();
 
-        //Yummy Guac
         Recipe guacRecipe = new Recipe();
         guacRecipe.setDescription("Perfect Guacamole");
         guacRecipe.setPrepTime(10);
@@ -127,22 +123,20 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         guacNotes.setRecipe(guacRecipe);
         guacRecipe.setNotes(guacNotes);
 
-        guacRecipe.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2), eachUom));
-        guacRecipe.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal(".5"), teapoonUom));
-        guacRecipe.getIngredients().add(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(2), tableSpoonUom));
-        guacRecipe.getIngredients().add(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), tableSpoonUom));
-        guacRecipe.getIngredients().add(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal(2), eachUom));
-        guacRecipe.getIngredients().add(new Ingredient("Cilantro", new BigDecimal(2), tableSpoonUom));
-        guacRecipe.getIngredients().add(new Ingredient("freshly grated black pepper", new BigDecimal(2), dashUom));
-        guacRecipe.getIngredients().add(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(".5"), eachUom));
+        guacRecipe.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2), eachUom,guacRecipe));
+        guacRecipe.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal(".5"), teapoonUom,guacRecipe));
+        guacRecipe.getIngredients().add(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(2), tableSpoonUom,guacRecipe));
+        guacRecipe.getIngredients().add(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), tableSpoonUom,guacRecipe));
+        guacRecipe.getIngredients().add(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal(2), eachUom,guacRecipe));
+        guacRecipe.getIngredients().add(new Ingredient("Cilantro", new BigDecimal(2), tableSpoonUom,guacRecipe));
+        guacRecipe.getIngredients().add(new Ingredient("freshly grated black pepper", new BigDecimal(2), dashUom,guacRecipe));
+        guacRecipe.getIngredients().add(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(".5"), eachUom,guacRecipe));
 
         guacRecipe.getCategories().add(americanCategory);
         guacRecipe.getCategories().add(mexicanCategory);
 
-        //add to return list
         recipes.add(guacRecipe);
 
-        //Yummy Tacos
         Recipe tacosRecipe = new Recipe();
         tacosRecipe.setDescription("Spicy Grilled Chicken Taco");
         tacosRecipe.setCookTime(9);

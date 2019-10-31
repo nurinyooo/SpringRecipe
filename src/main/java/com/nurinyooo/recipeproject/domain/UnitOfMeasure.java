@@ -14,6 +14,7 @@ public class UnitOfMeasure {
     private String description;
 
     public UnitOfMeasure() {
+
     }
 
     public Long getId() {

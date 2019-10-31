@@ -1,6 +1,8 @@
 package com.nurinyooo.recipeproject.controller;
 
 import com.nurinyooo.recipeproject.commands.IngredientCommand;
+import com.nurinyooo.recipeproject.commands.RecipeCommand;
+import com.nurinyooo.recipeproject.commands.UnitOfMeasureCommand;
 import com.nurinyooo.recipeproject.services.IngredientService;
 import com.nurinyooo.recipeproject.services.RecipeService;
 import com.nurinyooo.recipeproject.services.UnitOfMeasureService;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class IngredientController  {
-
 
     private final RecipeService recipeService;
     private final IngredientService ingredientService;
@@ -40,6 +41,24 @@ public class IngredientController  {
     }
 
     @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newIngredient(@PathVariable String recipeId, Model model){
+
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+        //todo raise exception if null
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+
+        ingredientCommand.setUnitOfMeasure(new UnitOfMeasureCommand());
+
+        model.addAttribute("uomList",  unitOfMeasureService.listAllUoms());
+
+        return "recipe/ingredient/ingredientform";
+    }
+
+    @GetMapping
     @RequestMapping("recipe/{recipeId}/ingredient/{id}/update")
     public String updateRecipeIngredient(@PathVariable String recipeId,
                                          @PathVariable String id, Model model){
@@ -54,5 +73,15 @@ public class IngredientController  {
         IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
 
         return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredient/" + savedCommand.getId() + "/show";
+    }
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/{id}/delete")
+    public String deleteIngredient(@PathVariable String recipeId,
+                                   @PathVariable String id){
+
+        ingredientService.deleteById(Long.valueOf(recipeId), Long.valueOf(id));
+
+        return "redirect:/recipe/" + recipeId + "/ingredients";
     }
 }
